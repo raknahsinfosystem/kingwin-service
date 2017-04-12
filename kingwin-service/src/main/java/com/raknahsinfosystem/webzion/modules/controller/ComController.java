@@ -1,4 +1,4 @@
-/*package com.raknahsinfosystem.webzion.user_mgmt.controller;
+package com.raknahsinfosystem.webzion.modules.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.raknahsinfosystem.webzion.user_mgmt.model.User;
-import com.raknahsinfosystem.webzion.user_mgmt.service.UserService;
+
 //import com.raknahsinfosystem.webzion.Utility;
 
 
@@ -17,9 +16,8 @@ import com.raknahsinfosystem.webzion.user_mgmt.service.UserService;
 
 @RestController
 @RequestMapping(value="/rest/api", produces="application/json")
-public class UserController  {
-	final static Logger logger = Logger.getLogger(UserController.class);
-	@Autowired
+public class ComController  {
+	/*@Autowired
 	private UserService userService;
 
 	private UserService getUserService(){
@@ -27,19 +25,19 @@ public class UserController  {
 	}
 	public void setUseService(UserService userService) {
 		this.userService = userService;
-	}
-	@RequestMapping(value="/user", produces="application/json", method=RequestMethod.GET)
-	public Object getUsers(){
-		Object userList=new Object();
+	}*/
+	@RequestMapping(value="/login", produces="application/json", method=RequestMethod.POST)
+	public Object doLogin(){
+		String userList="success";
 		try {
-			logger.info("searchUser method");
-			userList= getUserService().searchUser();
+			
+			//userList= getUserService().searchUser();
 		} catch (Exception e) {
-			logger.error("Could not get userDetails", e);
+			e.printStackTrace();
 		}
 		return userList;
 	}
-	@RequestMapping(value="/user/getUser", produces="application/json", method = RequestMethod.GET)
+	/*@RequestMapping(value="/user/getUser", produces="application/json", method = RequestMethod.GET)
 	public Object getUser(@RequestParam("userName") String nameValue){
 		Object user=new Object();
 		try {
@@ -107,8 +105,6 @@ public class UserController  {
 			logger.error("Could not update user", e);
 		}
 		return result;
-	}
+	}*/
 }
 
-
-*/
