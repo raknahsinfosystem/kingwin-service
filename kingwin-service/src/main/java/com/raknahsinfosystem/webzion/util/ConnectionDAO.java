@@ -26,7 +26,7 @@ public class ConnectionDAO {
 		//public static final String URL_CORE_2 = System.getenv("NEO4J_BOLT_CORE2_URL") != null ? System.getenv("NEO4J_BOLT_CORE2_URL") : "bolt://localhost:7688"; //7680
 		//public static final String URL_CORE_3 = System.getenv("NEO4J_BOLT_CORE3_URL") != null ? System.getenv("NEO4J_BOLT_CORE3_URL") : "bolt://localhost:7689"; //7680
 		
-	public static Connection getMySqlConnection(String mode){
+	public static Connection getConnection(String mode){
 		Connection conn=null;
 		try {
 			ConfigurationProperties conf = new ConfigurationProperties();

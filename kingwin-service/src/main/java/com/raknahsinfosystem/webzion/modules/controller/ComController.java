@@ -1,12 +1,16 @@
 package com.raknahsinfosystem.webzion.modules.controller;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.raknahsinfosystem.webzion.modules.impl.ComImpl;
+import com.raknahsinfosystem.webzion.modules.model.EBook;
 
 
 //import com.raknahsinfosystem.webzion.Utility;
@@ -36,6 +40,32 @@ public class ComController  {
 			e.printStackTrace();
 		}
 		return userList;
+	}
+	
+	@RequestMapping(value="/uploadEbook", produces="application/json", method=RequestMethod.POST)
+	public Object uploadEbook(EBook ebook){
+		//String userList="success";
+		
+		try {
+			
+			//userList= getUserService().searchUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@RequestMapping(value="/getBranches", produces="application/json", method=RequestMethod.GET)
+	public Object getBranchs(EBook ebook){
+		//String userList="success";
+		JSONArray branchArr=null;
+		try {
+			ComImpl comImpl=new ComImpl();
+			branchArr=comImpl.getBranches();
+			//userList= getUserService().searchUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return branchArr.toString();
 	}
 	/*@RequestMapping(value="/user/getUser", produces="application/json", method = RequestMethod.GET)
 	public Object getUser(@RequestParam("userName") String nameValue){

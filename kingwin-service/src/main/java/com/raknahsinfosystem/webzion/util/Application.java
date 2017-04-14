@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @SpringBootApplication
-@ComponentScan("com.raknahsinfosystem")
+@ComponentScan("com.raknahsinfosystem.webzion")
 public class Application extends SpringBootServletInitializer{
 
 	private static Log logger = LogFactory.getLog(Application.class);
