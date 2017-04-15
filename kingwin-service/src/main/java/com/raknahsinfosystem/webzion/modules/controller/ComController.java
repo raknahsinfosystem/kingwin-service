@@ -41,18 +41,45 @@ public class ComController  {
 		}
 		return userList;
 	}
-	
-	@RequestMapping(value="/uploadEbook", produces="application/json", method=RequestMethod.POST)
-	public Object uploadEbook(EBook ebook){
-		//String userList="success";
+	@RequestMapping(value="/getEbookList", produces="application/json", method=RequestMethod.GET)
+	public Object getEbookList(@RequestParam("eBookType") String eBookType){
+		JSONArray eBookList=null;
 		
 		try {
-			
+			ComImpl comImpl=new ComImpl();
+			eBookList=comImpl.getEBooksImpl(eBookType);
 			//userList= getUserService().searchUser();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return eBookList.toString();
+	}
+	
+	@RequestMapping(value="/uploadEBook", produces="application/json", method=RequestMethod.POST)
+	public Object uploadEbook(@RequestBody EBook eBook){
+		boolean uploadStatus=false;
+		
+		try {
+			ComImpl comImpl=new ComImpl();
+			uploadStatus=comImpl.uploadEBookImpl(eBook);
+			//userList= getUserService().searchUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uploadStatus;
+	}
+	@RequestMapping(value="/uploadEBook", produces="application/json", method=RequestMethod.PUT)
+	public Object updateEbook(@RequestBody  EBook eBook){
+		boolean uploadStatus=false;
+		
+		try {
+			ComImpl comImpl=new ComImpl();
+			uploadStatus=comImpl.updateEBookImpl(eBook);
+			//userList= getUserService().searchUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uploadStatus;
 	}
 	@RequestMapping(value="/getBranches", produces="application/json", method=RequestMethod.GET)
 	public Object getBranchs(EBook ebook){

@@ -1,9 +1,10 @@
+drop schema if exists webzion; 
 create schema if not exists webzion;
 use webzion;
 create table if not exists branch(id int primary key AUTO_INCREMENT, syllabusType varchar(50), userType varchar(50),place varchar(50) ,password varchar(50));
 
 /*create table if not exists subject(id int primary key AUTO_INCREMENT, subjectId int, subjectName varchar(50),syllabus varchar(50),branch varchar(50),file blob,createdDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updatedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);*/
-create table if not exists ebook(id int primary key AUTO_INCREMENT, eBookId int, eBookName varchar(50),eBookType varchar(50), syllabus varchar(50),branch varchar(50),file blob, language varchar(50),createdDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updatedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+create table if not exists ebook(id int primary key AUTO_INCREMENT, eBookId varchar(50), eBookName varchar(50),eBookType varchar(50), syllabus varchar(50),branch varchar(50),file LONGBLOB NULL DEFAULT NULL,origFileName varchar(50), language varchar(50) DEFAULT NULL,dateToShow TIMESTAMP NULL, createdDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updatedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 
 insert into branch(syllabusType,userType,place,password) values("CMC/NEET","admin","admin","admin@webzion");
 insert into branch(syllabusType,userType,place,password) values("CMC/NEET","student","velur","admin@velurCMC");
