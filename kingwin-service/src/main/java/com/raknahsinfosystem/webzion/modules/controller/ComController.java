@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.raknahsinfosystem.webzion.modules.impl.ComImpl;
+import com.raknahsinfosystem.webzion.modules.model.Branch;
 import com.raknahsinfosystem.webzion.modules.model.EBook;
 
 
@@ -42,7 +43,7 @@ public class ComController  {
 		return userList;
 	}
 	@RequestMapping(value="/getEbookList", produces="application/json", method=RequestMethod.GET)
-	public Object getEbookList(@RequestParam("eBookType") String eBookType){
+	public Object getEBookList(@RequestParam("eBookType") String eBookType){
 		JSONArray eBookList=null;
 		
 		try {
@@ -56,25 +57,38 @@ public class ComController  {
 	}
 	
 	@RequestMapping(value="/uploadEBook", produces="application/json", method=RequestMethod.POST)
-	public Object uploadEbook(@RequestBody EBook eBook){
+	public Object uploadEBook(@RequestBody EBook eBook){
+		Integer genId=null;
+		
+		try {
+			ComImpl comImpl=new ComImpl();
+			genId=comImpl.uploadEBookImpl(eBook);
+			//userList= getUserService().searchUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return genId;
+	}
+	@RequestMapping(value="/uploadEBook", produces="application/json", method=RequestMethod.PUT)
+	public Object updateEBook(@RequestBody  EBook eBook){
 		boolean uploadStatus=false;
 		
 		try {
 			ComImpl comImpl=new ComImpl();
-			uploadStatus=comImpl.uploadEBookImpl(eBook);
+			uploadStatus=comImpl.updateEBookImpl(eBook);
 			//userList= getUserService().searchUser();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return uploadStatus;
 	}
-	@RequestMapping(value="/uploadEBook", produces="application/json", method=RequestMethod.PUT)
-	public Object updateEbook(@RequestBody  EBook eBook){
+	@RequestMapping(value="/uploadEBook", produces="application/json", method=RequestMethod.DELETE)
+	public Object deleteEBook(@RequestParam("id") int id){
 		boolean uploadStatus=false;
-		
+		// delete ebook table with primary key not ebookId
 		try {
 			ComImpl comImpl=new ComImpl();
-			uploadStatus=comImpl.updateEBookImpl(eBook);
+			uploadStatus=comImpl.deleteEBookImpl(id);
 			//userList= getUserService().searchUser();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,74 +108,18 @@ public class ComController  {
 		}
 		return branchArr.toString();
 	}
-	/*@RequestMapping(value="/user/getUser", produces="application/json", method = RequestMethod.GET)
-	public Object getUser(@RequestParam("userName") String nameValue){
-		Object user=new Object();
+	@RequestMapping(value="/updatePasswordSettings", produces="application/json", method=RequestMethod.POST)
+	public Object updatePasswordSettings(@RequestBody Branch branch){
+		boolean status=false;
 		try {
-			logger.info("searchUser method is started for userName " + nameValue);
-			user= getUserService().getUsers(nameValue);			
-		
+			ComImpl comImpl=new ComImpl();
+			status=comImpl.updatePasswordImpl(branch);
+			//userList= getUserService().searchUser();
 		} catch (Exception e) {
-			logger.error("Could not get userDetails for userid : " + nameValue, e);
-		}
-		return user;
-	}
-	@RequestMapping(value="/user/findUser", produces="application/json", method = RequestMethod.POST)
-	public Object findUserByName(@RequestBody String userObj){
-		Object user=new Object();
-		try {
-			logger.info("searchUser method is started for userName " + userObj);
-			user= getUserService().findUserByNameImpl(userObj);			
-		
-		} catch (Exception e) {
-			logger.error("Could not get userDetails for userid : " + userObj, e);
-		}
-		return user;
-	}
-	@RequestMapping(value="/user/getActive", produces="application/json", method = RequestMethod.GET)
-	public Object getUserActive() {
-		Object user=new Object();
-		try {
-			user = getUserService().getUserActiveDetails();
-		
-		} catch (Exception e) {
-			logger.error("Could not get userDetails for userid : " , e);
-		}
-		return user;
-	}
-	@RequestMapping(value="/user/createUser", produces="application/json", method=RequestMethod.POST)
-	public String createUser(@RequestBody User user) {
-	String isCreated = null;
-		try {
-			isCreated = getUserService().createUser(user);
-		} catch (Exception e) {
-			logger.error("Could not create user", e);
 			e.printStackTrace();
 		}
-		return isCreated;
-	}
-	@RequestMapping(value="/user", produces="application/json", method=RequestMethod.DELETE)
-	public  Object deleteUser(@RequestBody User user){		
-		Object result=new Object();
-		try {
-			result = getUserService().deleteUser(user.getUserId());
-		} catch (Exception e) {
-			logger.error("Could not delete user userid : " + user.getUserId(), e);
-		}
-		return  result;
+		return status;
 	}
 
-	@RequestMapping(value="/user", produces="application/json", method=RequestMethod.PUT)
-	public Object updateUser(@RequestBody User user)
-	{
-		Object result=new Object();
-		try {
-			result = getUserService().updateUser(user);
-			
-		} catch (Exception e) {
-			logger.error("Could not update user", e);
-		}
-		return result;
-	}*/
 }
 

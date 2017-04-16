@@ -13,7 +13,7 @@ public class EBook {
 	private String origFileName;
 	private String language;
 	//private String description;
-	private Long dateToShow;
+	private String dateToShow;
 	private Long createdDate;
 	private Long updatedDate;
 	
@@ -78,10 +78,10 @@ public class EBook {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-	public Long getDateToShow() {
+	public String getDateToShow() {
 		return dateToShow;
 	}
-	public void setDateToShow(Long dateToShow) {
+	public void setDateToShow(String dateToShow) {
 		this.dateToShow = dateToShow;
 	}
 	public Long getCreatedDate() {
