@@ -2,6 +2,7 @@ package com.raknahsinfosystem.webzion.modules.controller;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.raknahsinfosystem.webzion.modules.impl.ComImpl;
 import com.raknahsinfosystem.webzion.modules.model.Branch;
 import com.raknahsinfosystem.webzion.modules.model.EBook;
+import com.raknahsinfosystem.webzion.util.EncryptUtils;
 
 
 //import com.raknahsinfosystem.webzion.Utility;
@@ -31,7 +33,7 @@ public class ComController  {
 	public void setUseService(UserService userService) {
 		this.userService = userService;
 	}*/
-	@RequestMapping(value="/login", produces="application/json", method=RequestMethod.POST)
+	/*@RequestMapping(value="/login", produces="application/json", method=RequestMethod.POST)
 	public Object doLogin(){
 		String userList="success";
 		try {
@@ -41,7 +43,7 @@ public class ComController  {
 			e.printStackTrace();
 		}
 		return userList;
-	}
+	}*/
 	@RequestMapping(value="/getEbookList", produces="application/json", method=RequestMethod.GET)
 	public Object getEBookList(@RequestParam("eBookType") String eBookType){
 		JSONArray eBookList=null;
@@ -95,6 +97,19 @@ public class ComController  {
 		}
 		return uploadStatus;
 	}
+	@RequestMapping(value="/getEbook", produces="text/plain", method=RequestMethod.GET)
+	public Object getEbook(@RequestParam("id") int id){
+		StringBuffer fileStr=null;
+		// delete ebook table with primary key not ebookId
+		try {
+			ComImpl comImpl=new ComImpl();
+			fileStr=comImpl.getEbookImpl(id);
+			//userList= getUserService().searchUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return fileStr;
+	}
 	@RequestMapping(value="/getBranches", produces="application/json", method=RequestMethod.GET)
 	public Object getBranchs(EBook ebook){
 		//String userList="success";
@@ -119,6 +134,34 @@ public class ComController  {
 			e.printStackTrace();
 		}
 		return status;
+	}
+	
+	@RequestMapping(value="/login", produces="application/json", method=RequestMethod.POST)
+	public Object auth(@RequestBody String input){
+		JSONObject inputJSON=new JSONObject(input);
+		String userName = inputJSON.getString("userName");
+		String password = inputJSON.getString("password");
+		JSONObject respObj=new JSONObject();
+		try {
+			ComImpl comImpl=new ComImpl();
+			JSONObject branchObj=comImpl.getBranchByAuth(userName, password);
+			//PrintWriter out=response.getWriter();
+			if(branchObj==null){
+				respObj.put("status", "failure");
+				//respObj.put("userType", branchObj.get("userType"));
+				//respObj.put("userToken", branchObj.);
+			}
+			else{
+				String encryptBranchStr=EncryptUtils.getEncryptedMesssage(branchObj.toString());
+				respObj.put("status", "success");
+				respObj.put("userType", branchObj.get("userType"));
+				respObj.put("userToken", encryptBranchStr);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return respObj.toString();
 	}
 
 }

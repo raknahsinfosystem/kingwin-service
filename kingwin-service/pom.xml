@@ -55,6 +55,11 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- for dev purpose -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	    </dependency>
 		<!-- JSON Handling -->
 		<dependency>
 			<groupId>org.json</groupId>

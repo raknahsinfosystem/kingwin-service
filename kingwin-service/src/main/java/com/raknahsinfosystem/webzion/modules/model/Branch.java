@@ -3,6 +3,7 @@ package com.raknahsinfosystem.webzion.modules.model;
 public class Branch {
 	private String syllabus;
 	private String branch;
+	private String userType;
 	private String password;
 	private String oldPassword;
 	private String newPassword;
@@ -44,6 +45,12 @@ public class Branch {
 	}
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	
 	

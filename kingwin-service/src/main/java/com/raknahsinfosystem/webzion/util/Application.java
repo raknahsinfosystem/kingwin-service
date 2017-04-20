@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -29,6 +31,15 @@ public class Application extends SpringBootServletInitializer{
 	public static void main(String[] args) throws Exception {
 		 SpringApplication.run(Application.class, args);
 	}
+	/*@Bean
+    public ServletRegistrationBean loginServletRegistrationBean(){
+        return new ServletRegistrationBean(new LoginServlet(), "/login");
+    }*/
+	@Bean
+    public FilterRegistrationBean corsBean(){
+		
+        return new FilterRegistrationBean(new CORSFilter());
+    }
 	//Enable Global CORS support for the application
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
